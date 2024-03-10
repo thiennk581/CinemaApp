@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Momo Cinema</string>
+
+    <string name = "welcome_back">Welcome Back</string>
+    <string name = "sign_to_continue">Sign to continue</string>
+    <string name = "forgot_password">Forgot Password?</string>
+    <string name = "login_button">LOGIN</string>
+    <string name = "dont_have_an_account">Don\'t have an account?</string>
+    <string name = "register">Register</string>
+    <string name = "already_have_account">Already have account?</string>
+    <string name = "create_a_new_account">Create a new account</string>
+    <string name = "create_account">CREATE ACCOUNT</string>
+    <string name = "login">Login</string>
+
+    <string name = "idError_0"></string>
+    <string name = "idError_1">Wrong password</string>
+    <string name = "idError_2">Use 6 characters or more for your password.</string>
+    <string name = "idError_3">Those passwords didn\'t match. Try again.</string>
+
+
+    // label in TextField
+    <string name = "email_label">Email</string>
+    <string name = "password_label">Password</string>
+    <string name = "full_name_label">Full name</string>
+    <string name = "phone_label">Phone</string>
+    <string name = "confirm_label">Confirm</string>
+</resources>
