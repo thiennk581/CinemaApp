@@ -105,7 +105,7 @@ fun LoginScreen(modifier: Modifier = Modifier.padding(horizontal = 20.dp)) {
             Text(text = stringResource(id = R.string.dont_have_an_account), modifier = Modifier.padding(end = 4.dp))
             Text(text = stringResource(id = R.string.register), fontWeight = FontWeight.Bold, color = Color(0xFF234EC6),
                 modifier = Modifier.clickable {  })
-            // TODO
+                                    // TODO
         }
     }
 
