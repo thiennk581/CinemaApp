@@ -35,11 +35,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.momocinema.AppComponent.PasswordTextField
 import com.example.momocinema.AppComponent.TextFieldCustom
 import com.example.momocinema.R
+import com.example.momocinema.ui.theme.MomoCinemaTheme
 
 @Composable
 fun RegisterScreen(modifier: Modifier = Modifier.padding(horizontal = 20.dp)) {
@@ -65,7 +67,7 @@ fun RegisterScreen(modifier: Modifier = Modifier.padding(horizontal = 20.dp)) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier) {
         Divider(thickness = 25.dp, color = Color.White)
-        IconButton(onClick = { /*TODO*/ }, modifier = modifier.align(Alignment.Start)) {
+        IconButton(onClick = { /*TODO: trở về LoginScreen*/ }, modifier = modifier.align(Alignment.Start)) {
             Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = null, tint = Color(0xFF234EC6), modifier = Modifier
                 .size(32.dp)
                 .scale(scaleX = 1.2f, scaleY = 1f))
@@ -136,7 +138,7 @@ fun RegisterScreen(modifier: Modifier = Modifier.padding(horizontal = 20.dp)) {
             idError = validConfirmPassword
         )
         Divider(thickness = 15.dp, color = Color.White)
-        Button(
+        Button(             // button: CREATE ACCOUNT
             onClick = { /*TODO*/ },
             modifier = modifier
                 .fillMaxWidth()
@@ -153,7 +155,15 @@ fun RegisterScreen(modifier: Modifier = Modifier.padding(horizontal = 20.dp)) {
             Text(text = stringResource(id = R.string.already_have_account), modifier = Modifier.padding(end = 4.dp))
             Text(text = stringResource(id = R.string.login), fontWeight = FontWeight.Bold, color = Color(0xFF234EC6),
                 modifier = Modifier.clickable {  })
-            // TODO
+            // TODO: chuyển qua LoginScreen
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RegisterPreview() {
+    MomoCinemaTheme {
+        RegisterScreen()
     }
 }

@@ -4,17 +4,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -34,13 +29,14 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.momocinema.AppComponent.CustomButton
 import com.example.momocinema.AppComponent.PasswordTextField
 import com.example.momocinema.AppComponent.TextFieldCustom
 import com.example.momocinema.R
 import com.example.momocinema.ui.theme.MomoCinemaTheme
 
 @Composable
-fun LoginScreen(modifier: Modifier = Modifier.padding(horizontal = 20.dp)) {
+fun LoginScreen(modifier: Modifier = Modifier.padding(horizontal = 28.dp)) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -87,25 +83,16 @@ fun LoginScreen(modifier: Modifier = Modifier.padding(horizontal = 20.dp)) {
             modifier = modifier
                 .align(Alignment.End)
                 .clickable { /* TO DO*/ })
-        // TODO?      a thêm vô cho vui
+        // TODO?      a thêm vô cho vui, chắc khỏi cũng đc
 
         Divider(thickness = 30.dp, color = Color.White)
-        Button(
-            onClick = { /*TODO*/ },
-            modifier = modifier
-                .fillMaxWidth()
-                .height(50.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF234EC6), contentColor = Color.White),
-            shape = RoundedCornerShape(5.dp)
-        ) {
-            Text(text = stringResource(id = R.string.login_button), fontWeight = FontWeight(500), fontSize = 16.sp)
-        }
-        Divider(thickness = 18.dp, color = Color.White)
+        CustomButton(content = R.string.login_button, onClick = { /* TODO */})
+        Divider(thickness = 8.dp, color = Color.White)
         Row {
             Text(text = stringResource(id = R.string.dont_have_an_account), modifier = Modifier.padding(end = 4.dp))
             Text(text = stringResource(id = R.string.register), fontWeight = FontWeight.Bold, color = Color(0xFF234EC6),
                 modifier = Modifier.clickable {  })
-                                    // TODO
+                                    // TODO: qua RegisterScreen
         }
     }
 

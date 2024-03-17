@@ -4,7 +4,6 @@
     <string name = "welcome_back">Welcome Back</string>
     <string name = "sign_to_continue">Sign to continue</string>
     <string name = "forgot_password">Forgot Password?</string>
-    <string name = "login_button">LOGIN</string>
     <string name = "dont_have_an_account">Don\'t have an account?</string>
     <string name = "register">Register</string>
     <string name = "already_have_account">Already have account?</string>
@@ -24,4 +23,19 @@
     <string name = "full_name_label">Full name</string>
     <string name = "phone_label">Phone</string>
     <string name = "confirm_label">Confirm</string>
+
+    // button action
+    <string name = "login_button">"LOGIN</string>
+    <string name = "register_button">CREATE ACCOUNT</string>
+    <string name = "buy_button">Mua vé</string>
+
+    // detailRestrictAge
+    <string name = "all_age">Phim được phép phổ biến đến người xem ở mọi độ tuổi</string>
+    <string name = "over_13">Phim được phổ biến đến người xem từ đủ 13 tuổi trở lên</string>
+    <string name = "over_16">Phim được phổ biến đến người xem từ đủ 16 tuổi trở lên</string>
+    <string name = "over_18">Phim được phổ biến đến người xem từ đủ 18 tuổi trở lên</string>
+
+    <string name = "release_date">Ngày khởi chiếu</string>
+    <string name = "duration">Thời lượng</string>
+    <string name = "language">Ngôn ngữ</string>
 </resources>

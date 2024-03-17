@@ -29,8 +29,13 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -44,11 +49,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -57,7 +64,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
+import coil.compose.AsyncImage
 import com.example.momocinema.R
+import com.example.momocinema.model.Cast
 import com.example.momocinema.model.Film
 import kotlin.math.absoluteValue
 
@@ -73,7 +82,7 @@ fun restrictAgeTag(restrictAge: Int, modifier: Modifier = Modifier) {
             else -> "P" },
         color = Color.White,
         fontSize = 13.sp,
-        modifier = Modifier
+        modifier = modifier
             .padding(5.dp)
             .height(18.dp)
             .width(34.dp)
@@ -84,7 +93,7 @@ fun restrictAgeTag(restrictAge: Int, modifier: Modifier = Modifier) {
                     13 -> Color(0xFFD8BC4F)
                     else -> Color(0xFF5B9817)
                 },
-                shape = RoundedCornerShape(12.dp)
+                shape = RoundedCornerShape(12.dp,)
             )
             .border(
                 BorderStroke(1.dp, SolidColor(Color.White)),
@@ -95,7 +104,17 @@ fun restrictAgeTag(restrictAge: Int, modifier: Modifier = Modifier) {
 }           // tag 18+ 13+ 16 +P
 
 @Composable
-fun filmCard(                                   // TODO
+fun numberOfReviews(amount: Int, style: TextStyle) {
+    Text(
+        text = if (amount < 1000) "(${amount} đánh giá)" else "("+"%.1f".format(amount/1000.0) +"K đánh giá)",
+        color = Color(0xFFBEBEBE),
+        style = style,
+        fontWeight = FontWeight.W400
+    )
+}
+
+@Composable
+fun filmCard(
     film: Film,
     purposeTitle: String,
     modifier: Modifier = Modifier
@@ -106,8 +125,8 @@ fun filmCard(                                   // TODO
         modifier = modifier
             .padding(5.dp)
             .size(width = 161.dp, height = 283.dp)
-            .clickable { },                                    // TODO
-
+            .clickable { },                                    // TODO: nhấp vào chuyển sang FilmInfoScreen
+                // anh để hàm clickable trong đây luôn để mỗi lần gọi hàm đỡ phải truyền vào
         horizontalAlignment = alignDetail
     ) {
         Box() {
@@ -147,17 +166,11 @@ fun filmCard(                                   // TODO
                         modifier = Modifier.size(12.dp)
                     )
                     Text(
-                        text = " ${film.ranking}/10 ",
+                        text = " ${film.ranking.averageRating}/10 ",
                         style = MaterialTheme.typography.labelSmall,
                         fontWeight = FontWeight.W400
                     )
-                    Text(
-                        text = if (film.totalReviews < 1000) "(${film.totalReviews} đánh giá)" else "("+"%.1f".format(film.totalReviews/1000.0) +"K đánh giá)",
-                        color = Color(0xFFBEBEBE),
-                        style = MaterialTheme.typography.labelSmall,
-                        fontWeight = FontWeight.W400
-
-                    )
+                    numberOfReviews(amount = film.ranking.amount, style = MaterialTheme.typography.labelSmall)
                 }
             Text(
                 text = film.title,                fontWeight = FontWeight(600),
@@ -205,8 +218,8 @@ fun titleListFilm(
             color = Color.Black,
         )
 
-        Row(modifier = Modifier
-            .clickable {  }                         // TODO cần chuyển sang trang có đầy đủ phim hơn
+        Row(modifier = Modifier                     // "Xem tất cả >"
+            .clickable {  }                         // TODO cần chuyển sang trang có đầy đủ phim hơn "Xem tất cả    >"
         ) {
             Text(
                 text = "Xem tất cả",
@@ -218,7 +231,7 @@ fun titleListFilm(
             Icon(imageVector = Icons.Filled.KeyboardArrowRight, contentDescription = null)
         }
     }
-}                               // TODO cần xử lý hàm clickable{} của "Xem tất cả >"
+}
 
 @Composable
 fun briefFilmList(listFilm: List<Film>, purposeTitle: String, modifier: Modifier = Modifier) {
@@ -347,4 +360,187 @@ fun PasswordTextField(
         },
         modifier = modifier
     )
+}
+
+@Composable
+fun detailRating(film: Film) {
+    Card(
+        elevation = CardDefaults.cardElevation(12.dp),
+        colors = CardDefaults.cardColors(Color.White),
+        modifier = Modifier
+            .padding(vertical = 20.dp, horizontal = 10.dp)
+            .fillMaxWidth()
+
+
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceAround,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 17.dp)) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Absolute.Center) {
+                    Icon(imageVector = Icons.Filled.Star, contentDescription = null, tint = Color(0xFFFE8E1D), modifier = Modifier.size(30.dp))
+                    Text(text = film.ranking.averageRating.toString(), fontSize = 30.sp, fontWeight = FontWeight.Bold, lineHeight = 30.sp)
+                    Text(
+                        text = "/10",
+                        fontWeight = FontWeight(450),
+                        fontSize = 15.sp,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                        lineHeight = 16.25.sp,
+                        modifier = Modifier
+                            .wrapContentSize()
+                            .padding(top = 5.dp, bottom = 5.dp)
+                            .align(Alignment.Bottom)
+                    )
+                }
+                numberOfReviews(amount = film.ranking.amount, style = MaterialTheme.typography.labelLarge)
+            }
+            Column {
+                determinateProgress(progress = (film.ranking.star910.toFloat() / film.ranking.amount), star = 9)
+                determinateProgress(progress = (film.ranking.star78.toFloat() / film.ranking.amount), star = 7)
+                determinateProgress(progress = (film.ranking.star56.toFloat() / film.ranking.amount), star = 5)
+                determinateProgress(progress = (film.ranking.star34.toFloat() / film.ranking.amount), star = 3)
+                determinateProgress(progress = (film.ranking.star12.toFloat() / film.ranking.amount), star = 1)
+
+            }
+        }
+    }
+}
+
+@Composable
+fun determinateProgress(progress: Float, star: Int) {
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 5.dp)) {
+        Text(text = "$star-${star+1}", modifier = Modifier.width(35.dp))
+        Icon(imageVector = Icons.Filled.Star, contentDescription = null, tint = Color.LightGray, modifier = Modifier
+            .padding(end = 10.dp)
+            .size(17.dp))
+        LinearProgressIndicator(
+            progress = progress,
+            color = Color(0xFFFE8E1D),
+            strokeCap = StrokeCap.Round,
+            modifier = Modifier
+                .size(145.dp, 7.dp)
+                .clip(shape = RoundedCornerShape(100.dp))
+        )
+    }
+}
+
+
+@Composable
+fun firstInfo(film: Film) {
+    Row(modifier = Modifier.padding(horizontal = 10.dp)) {
+        Image(painter = painterResource(id = film.picture), contentDescription = null, modifier = Modifier.width(120.dp).height(160.dp).clip(shape = RoundedCornerShape(8.dp)))
+        Column(modifier = Modifier.padding(start = 5.dp, end = 10.dp)) {
+            Text(
+                text = film.title,
+                fontWeight = FontWeight(600),
+                fontSize = 20.sp,
+                color = Color.Black,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.wrapContentSize().padding(top = 3.dp, start = 5.dp)
+            )
+            Text(
+                text = film.tag,
+                fontWeight = FontWeight(450),
+                fontSize = 13.sp,
+                color = Color(0xFF797979),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                lineHeight = 16.25.sp,
+                modifier = Modifier.wrapContentSize().padding(top = 5.dp, start = 5.dp, bottom = 5.dp)
+            )
+            Row {
+                restrictAgeTag(restrictAge = film.restrictAge)
+                Text(
+                    text = stringResource(
+                        id = when (film.restrictAge) {
+                            18 -> R.string.over_18
+                            16 -> R.string.over_16
+                            else -> R.string.all_age
+                        }
+                    ),
+                    fontWeight = FontWeight(450), fontSize = 13.sp, color = Color(0xFF797979), lineHeight = 16.25.sp,
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .padding(top = 5.dp, start = 5.dp)
+                )
+            }
+        }
+
+    }
+}
+@Composable
+fun secondInfo(title: Int, detail: String, modifier: Modifier = Modifier) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
+        Text(
+            text = stringResource(id = title),
+            fontWeight = FontWeight(450),
+            fontSize = 13.sp,
+            color = Color(0xFF797979),
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+            lineHeight = 16.25.sp,
+            modifier = Modifier
+                .wrapContentSize()
+                .padding(top = 5.dp, start = 5.dp, bottom = 5.dp)
+        )
+
+        Text(
+            text = detail,
+            fontWeight = FontWeight(600),
+            fontSize = 15.sp,
+            color = Color.Black,
+            maxLines = 2,
+            lineHeight = 17.sp,
+            overflow = TextOverflow.Clip,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .wrapContentSize()
+                .padding(top = 3.dp, start = 5.dp)
+                .width(88.dp)
+        )
+    }
+}
+
+@Composable
+fun castInfo(cast: Cast) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.width(120.dp)) {
+        AsyncImage(
+            model = cast.pictureUrl,
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .padding(bottom = 5.dp)
+                .size(120.dp, 170.dp)
+                .clip(RoundedCornerShape(7.dp))
+        )
+        Text(text = cast.name, textAlign = TextAlign.Center, lineHeight = 17.sp)
+        Text(text = cast.characterName, textAlign = TextAlign.Center, lineHeight = 17.sp, color = Color(0xFF949494), modifier = Modifier.padding(bottom = 17.dp))
+    }
+}
+
+@Composable
+fun CustomButton(content: Int, onClick:() -> Unit, modifier: Modifier = Modifier) {
+    Button(
+        onClick = onClick,
+
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF234EC6), contentColor = Color.White),
+        shape = RoundedCornerShape(8.dp),
+        elevation = ButtonDefaults.buttonElevation(2.dp),
+        modifier = Modifier
+            .padding(10.dp)
+            .fillMaxWidth()
+            .height(50.dp)
+            .border(
+                BorderStroke(1.dp, SolidColor(Color.Cyan)),
+                shape = RoundedCornerShape(8.dp)
+            )
+    ) {
+        Text(text = stringResource(id = content), fontSize = 20.sp)
+    }
 }

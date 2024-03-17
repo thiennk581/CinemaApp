@@ -1,15 +1,9 @@
 package com.example.momocinema.screens
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,11 +19,11 @@ fun SelectFilmScreen(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.verticalScroll(rememberScrollState())
     ) {
-        ListTrendingNow(listFilm = Datasource().loadFilms(), purposeTitle = "Phim nổi bật")
+        ListTrendingNow(listFilm = Datasource().loadFilms(), purposeTitle = "Phim nổi bật")                 // TODO: truyền listFilm phù hợp vào
         Divider(thickness = 10.dp, color = Color(0xFFEEEEEE))
-        briefFilmList(listFilm = Datasource().loadFilms(), "Phim hay đang chiếu")
+        briefFilmList(listFilm = Datasource().loadFilms(), "Phim hay đang chiếu")               // TODO: truyền listFilm phù hợp vào
         Divider(thickness = 10.dp, color = Color(0xFFEEEEEE))
-        briefFilmList(listFilm = Datasource().loadFilms(), "Phim sắp chiếu")
+        briefFilmList(listFilm = Datasource().loadFilms(), "Phim sắp chiếu")                // TODO: truyền listFilm phù hợp vào
     }
 
 }
