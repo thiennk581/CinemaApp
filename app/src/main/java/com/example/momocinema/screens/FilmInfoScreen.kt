@@ -55,7 +55,7 @@ fun FilmInfo(film: Film) {
             SmallTopAppBar(
                 title = { Text(text = film.title, maxLines = 1, overflow = TextOverflow.Ellipsis) },
                 navigationIcon = {
-                    IconButton(onClick = { /*TODO*/ }) {            // trở về trang trước
+                    IconButton(onClick = { /* TODO */ }) {            // trở về trang trước
                         OutlinedCard { Icon(imageVector = Icons.Filled.KeyboardArrowLeft, contentDescription = null) }
                     }
                 },
@@ -76,9 +76,11 @@ fun FilmInfo(film: Film) {
 
             firstInfo(film = film)
 
-            Row(modifier = Modifier
+            Row(
+                modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 10.dp) ,horizontalArrangement = Arrangement.SpaceEvenly) {
+                .padding(top = 10.dp) ,horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
                 secondInfo(title = R.string.release_date, detail = film.releaseDate)
                 Divider(thickness = 1.dp, color = Color(0xFFC8C8C8), modifier = Modifier
                     .height(48.dp)
@@ -102,6 +104,7 @@ fun FilmInfo(film: Film) {
                 Text(text = film.description, modifier = Modifier.padding(top = 7.dp))
             }
             Divider(thickness = 10.dp, color = Color(0xFFE6E6E6))
+
             // cast & Crew
             // phần clickable (hiện các phim mà cast đã tham gia) chưa cần thiết, qua giai đoạn 2 làm sau
             Column(modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = 15.dp)) {

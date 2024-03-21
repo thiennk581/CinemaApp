@@ -22,7 +22,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    //Greeting("Android", listFilm[0])
+
+
                 }
             }
         }
@@ -32,14 +33,15 @@ class MainActivity : ComponentActivity() {
 val listFilm = Datasource().loadFilms()
 
 
-
-
-
-
-@Preview(showBackground = true)
+@Preview(showBackground = true, apiLevel = 33)
 @Composable
 fun GreetingPreview() {
     MomoCinemaTheme {
-        //Greeting("Android", listFilm[0])
+        //LogoCinema(Cinema("Cinestar", "Đồng Nai", "https://homepage.momocdn.net/blogscontents/momo-upload-api-210604170453-637584230934981809.png"))
+        // selectDay()
+        //listCinema(Datasource().loadCinemas())
+        //detailCinema(cinema = Cinema("Cinestar", "Đồng Nai", "https://homepage.momocdn.net/blogscontents/momo-upload-api-210604170453-637584230934981809.png"), isExpanded = isExpanded, {isExpanded = !isExpanded})
+        //Showtime(perform = Perform(listFilm[0], startTime = "17:20") )
+
     }
 }
