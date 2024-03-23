@@ -35,6 +35,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.sharp.KeyboardArrowDown
@@ -43,12 +44,17 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -81,17 +87,15 @@ import com.example.momocinema.model.Cast
 import com.example.momocinema.model.Cinema
 import com.example.momocinema.model.Film
 import com.example.momocinema.model.Perform
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import kotlin.math.absoluteValue
 
+// Timestamp(2024-03-23 14:18:00.0) -> String(14:18)
+fun getStringOfTime(time: Timestamp): String = SimpleDateFormat("HH:mm").format(time)
 
-fun calculateEndTimePerform(startTime: String, duration: Int): String {
-    val formatted = SimpleDateFormat("HH:mm")
-    val dateStartTime = formatted.parse(startTime)
-    val dateEndTime = (dateStartTime.time + duration*60*1000)
-    return formatted.format(dateEndTime)
-}
 
 @Composable
 fun restrictAgeTag(restrictAge: Int, modifier: Modifier = Modifier) {
@@ -454,7 +458,10 @@ fun determinateProgress(progress: Float, star: Int) {
 @Composable
 fun firstInfo(film: Film) {
     Row(modifier = Modifier.padding(horizontal = 10.dp)) {
-        Image(painter = painterResource(id = film.picture), contentDescription = null, modifier = Modifier.width(120.dp).height(160.dp).clip(shape = RoundedCornerShape(8.dp)))
+        Image(painter = painterResource(id = film.picture), contentDescription = null, modifier = Modifier
+            .width(120.dp)
+            .height(160.dp)
+            .clip(shape = RoundedCornerShape(8.dp)))
         Column(modifier = Modifier.padding(start = 5.dp, end = 10.dp)) {
             Text(
                 text = film.title,
@@ -463,7 +470,9 @@ fun firstInfo(film: Film) {
                 color = Color.Black,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.wrapContentSize().padding(top = 3.dp, start = 5.dp)
+                modifier = Modifier
+                    .wrapContentSize()
+                    .padding(top = 3.dp, start = 5.dp)
             )
             Text(
                 text = film.tag,
@@ -473,7 +482,9 @@ fun firstInfo(film: Film) {
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
                 lineHeight = 16.25.sp,
-                modifier = Modifier.wrapContentSize().padding(top = 5.dp, start = 5.dp, bottom = 5.dp)
+                modifier = Modifier
+                    .wrapContentSize()
+                    .padding(top = 5.dp, start = 5.dp, bottom = 5.dp)
             )
             Row {
                 restrictAgeTag(restrictAge = film.restrictAge)
@@ -606,34 +617,25 @@ fun DayCard(
 }
 
 @Composable
-fun selectDay() {
+fun selectDay(currentTime: Date) {
     val dayNames = arrayOf("C.Nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7")
-    val calendar = Calendar.getInstance()
-    val time = Calendar.getInstance().time
-    val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm")
-    val current = formatter.format(time)
-
-    val currentDay = current.substring(8, 10).toInt()
-    val currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1
-    val currentMonth = current.substring(5, 7).toInt()
-    val currentYear = current.substring(0, 4).toInt()
-    val currentHour = current.substring(11, 13).toInt() + 7
-    val currentMinute = current.substring(14, 16).toInt()
-
-    val dayOfCurrentMonth = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH) + 1
-
+    val currentDate = currentTime.date
+    val currentDay = currentTime.day
+    val numberOfDayOfCurrentMonth = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH) + 1
     var selectedCardId by remember { mutableStateOf(0) }
-    Row(modifier = Modifier.horizontalScroll(rememberScrollState()).padding(start = 7.dp, end = 7.dp, bottom = 15.dp)) {
-        DayCard(cardId = 0, selectedCardId = selectedCardId, day = (currentDay + 0) % dayOfCurrentMonth, dayOfWeek = "H.nay", onClick = {selectedCardId = 0})
-        for(cardId in 1..13) {
+
+    Row(modifier = Modifier
+        .horizontalScroll(rememberScrollState())
+        .padding(start = 7.dp, end = 7.dp, bottom = 15.dp)) {
+        for(cardId in 0..13) {
 //          if((currentDay + i) % dayOfCurrentMonth == 0) newMonth = 1
-            val day = if (currentDay + cardId <= dayOfCurrentMonth) (currentDay + cardId ) % dayOfCurrentMonth else (currentDay + cardId + 1) % dayOfCurrentMonth
+            val day = if (currentDate + cardId <= numberOfDayOfCurrentMonth) (currentDate + cardId ) % numberOfDayOfCurrentMonth else (currentDate + cardId + 1) % numberOfDayOfCurrentMonth
             DayCard(
                 cardId = cardId,
                 selectedCardId = selectedCardId,
                 day = if (day == 0) 1 else day,
-                dayOfWeek = dayNames[(currentDayOfWeek + cardId) % 7],
-                onClick = {selectedCardId = cardId}
+                dayOfWeek = if(cardId == 0) "H.nay" else dayNames[(currentDay + cardId) % 7],
+                onClick = {selectedCardId = cardId}     // TODO: đây là hàm chọn
             )
             //CustomCard(day = (currentDay + i + newMonth) % dayOfCurrentMonth, dayNames[(currentDayOfWeek+i) % 7], isSelect, { isSelect = !isSelect})
         }
@@ -686,8 +688,8 @@ fun Showtime(perform: Perform, onClick:() -> Unit) {
             modifier = Modifier.size(132.dp, 72.dp)
         ) {
             Row(verticalAlignment = Alignment.Bottom) {
-                Text(text = perform.startTime, fontSize = 18.sp, fontWeight = FontWeight.Bold)
-                Text(text = " ~ ${perform.endTime}", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Color.Gray, modifier = Modifier.padding(bottom = 2.dp))
+                Text(text = getStringOfTime(perform.startTime), fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                Text(text = " ~ ${getStringOfTime(perform.endTime)}", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Color.Gray, modifier = Modifier.padding(bottom = 2.dp))
             }
             Text(text = "139/139 Ghế", fontSize = 15.sp, color = Color.Gray)
             // TODO: "139/139 ghế" này a ko biết lấy dữ liệu sao
@@ -704,7 +706,9 @@ fun detailCinema(listPerform: List<Perform>, cinema: Cinema, isExpanded: Boolean
             stiffness = Spring.StiffnessLow
         )
     )
-    Column (modifier = Modifier.padding(horizontal = 10.dp).fillMaxWidth()){
+    Column (modifier = Modifier
+        .padding(horizontal = 10.dp)
+        .fillMaxWidth()){
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
             .padding(vertical = 10.dp, horizontal = 3.dp)
             .fillMaxWidth()) {
@@ -724,7 +728,9 @@ fun detailCinema(listPerform: List<Perform>, cinema: Cinema, isExpanded: Boolean
             LazyVerticalGrid(columns = GridCells.Fixed(3),
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier.fillMaxWidth().height(255.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(255.dp)
             ) {
                 items(listPerform) {item   ->
                     Showtime(perform = item, onClick = { /* TODO: chuyển sang trang chọn ghế */})
@@ -732,4 +738,25 @@ fun detailCinema(listPerform: List<Perform>, cinema: Cinema, isExpanded: Boolean
             }
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomTopAppBar(title: String, onClick: () -> Unit) {
+    CenterAlignedTopAppBar(
+        title = { Text(text = title, maxLines = 1, overflow = TextOverflow.Ellipsis, color = Color.White, textAlign = TextAlign.Center, modifier = Modifier.width(290.dp))},
+        navigationIcon = {
+            IconButton(onClick = onClick) {            // trở về trang trước
+                OutlinedCard(colors = CardDefaults.outlinedCardColors(Color(0xFF5866C4))) {
+                    Icon(imageVector = Icons.Filled.KeyboardArrowLeft, contentDescription = null, tint = Color.White)
+                }
+            }
+        },
+        scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState()),
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(Color(0xFF234EC6))
+    )
+}
+
+fun formatPrice(price: Int): String {
+    return String.format("%,d", price) + "đ"
 }

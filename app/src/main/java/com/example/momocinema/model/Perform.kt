@@ -1,11 +1,11 @@
 package com.example.momocinema.model
 
-import com.example.momocinema.AppComponent.calculateEndTimePerform
+import java.sql.Timestamp
 
 data class Perform(
     val film: Film,
     //val viewType: List<ViewType>,
     //val translateType: List<TranslateType>,
-    val startTime: String,              // HH:mm
-    val endTime: String = calculateEndTimePerform(startTime, film.duration)
+    val startTime: Timestamp,              // HH:mm        // TODO: Timestamp
+    val endTime: Timestamp = Timestamp(startTime.time + film.duration*60*1000)      // minute -> milisecond
 )

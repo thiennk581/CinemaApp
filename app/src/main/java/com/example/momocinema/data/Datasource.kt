@@ -7,6 +7,7 @@ import com.example.momocinema.model.Cinema
 import com.example.momocinema.model.Film
 import com.example.momocinema.model.Perform
 import com.example.momocinema.model.Ranking
+import java.sql.Timestamp
 
 class Datasource() {
 
@@ -47,13 +48,13 @@ class Datasource() {
 
     fun loadPerforms(): List<Perform> {
         return listOf<Perform>(
-            Perform(listFilm[0], startTime = "09:00"),
-            Perform(listFilm[0], startTime = "09:30"),
-            Perform(listFilm[0], startTime = "11:30"),
-            Perform(listFilm[0], startTime = "13:00"),
-            Perform(listFilm[0], startTime = "15:30"),
-            Perform(listFilm[0], startTime = "17:00"),
-            Perform(listFilm[0], startTime = "17:30"),
+            Perform(listFilm[0], startTime = Timestamp.valueOf("2024-03-23 09:00:00.0")),
+            Perform(listFilm[0], startTime = Timestamp.valueOf("2024-03-23 09:30:00.0")),
+            Perform(listFilm[0], startTime = Timestamp.valueOf("2024-03-23 11:30:00.0")),
+            Perform(listFilm[0], startTime = Timestamp.valueOf("2024-03-23 13:00:00.0")),
+            Perform(listFilm[0], startTime = Timestamp.valueOf("2024-03-23 15:30:00.0")),
+            Perform(listFilm[0], startTime = Timestamp.valueOf("2024-03-23 17:00:00.0")),
+            Perform(listFilm[0], startTime = Timestamp.valueOf("2024-03-23 17:30:00.0")),
         )
     }
 
