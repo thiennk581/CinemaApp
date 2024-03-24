@@ -28,6 +28,8 @@
     <string name = "login_button">"LOGIN</string>
     <string name = "register_button">CREATE ACCOUNT</string>
     <string name = "buy_button">Mua vé</string>
+    <string name = "continue_button">Tiếp tục</string>
+    <string name = "change_perform">Đổi suất</string>
 
     // detailRestrictAge
     <string name = "all_age">Phim được phép phổ biến đến người xem ở mọi độ tuổi</string>
@@ -38,4 +40,10 @@
     <string name = "release_date">Ngày khởi chiếu</string>
     <string name = "duration">Thời lượng</string>
     <string name = "language">Ngôn ngữ</string>
+
+    // status of seat
+    <string name = "selectedSeat">Đã đặt</string>
+    <string name = "selectingSeat">Ghế bạn chọn</string>
+    <string name = "normalSeat">Ghế thường</string>
+    <string name = "VIPSeat">Ghế VIP</string>
 </resources>

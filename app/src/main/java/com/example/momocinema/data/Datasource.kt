@@ -4,9 +4,12 @@ import com.example.momocinema.R
 import com.example.momocinema.listFilm
 import com.example.momocinema.model.Cast
 import com.example.momocinema.model.Cinema
+import com.example.momocinema.model.CinemaLayout
+import com.example.momocinema.model.CinemaRoom
 import com.example.momocinema.model.Film
 import com.example.momocinema.model.Perform
 import com.example.momocinema.model.Ranking
+import com.example.momocinema.model.SeatPrice
 import java.sql.Timestamp
 
 class Datasource() {
@@ -34,27 +37,32 @@ class Datasource() {
 
     fun loadCinemas(): List<Cinema> {
         return listOf<Cinema>(
-            Cinema(name = "CGV", variant = "TP.HCM", logoUrl = "https://homepage.momocdn.net/placebrand/s/momo-upload-api-190709165424-636982880641515855.jpg"),
-            Cinema(name = "Lotte", variant = "Bình Dương", logoUrl = "https://homepage.momocdn.net/blogscontents/momo-upload-api-210604170617-637584231772974269.png"),
-            Cinema(name = "Galaxy", variant = "Long An", logoUrl = "https://homepage.momocdn.net/cinema/momo-upload-api-211123095138-637732578984425272.png"),
-            Cinema(name = "BHD", variant = "Vũng Tàu", logoUrl = "https://homepage.momocdn.net/blogscontents/momo-upload-api-210604170453-637584230934981809.png"),
-            Cinema(name = "Cinestar", variant = "Đồng Nai", logoUrl = "https://homepage.momocdn.net/blogscontents/momo-upload-api-210604170530-637584231309495829.png"),
-            Cinema(name = "MegaGS", variant = "Bình Phước", logoUrl = "https://homepage.momocdn.net/blogscontents/momo-upload-api-210604170511-637584231119272266.png"),
-            Cinema(name = "DCine", variant = "Hà Nội", logoUrl = "https://img.mservice.io/momo_app_v2/new_version/img/THAO.MAI/DcineLogo.png"),
-            Cinema(name = "Beta", variant = "Hải Phòng", logoUrl = "https://homepage.momocdn.net/cinema/momo-upload-api-210813104719-637644484394328824.png"),
-            Cinema(name = "Cinemax", variant = "Đà Nẵng", logoUrl = "https://homepage.momocdn.net/cinema/momo-upload-api-221108100132-638034984925107129.png")
+            Cinema(cinemaRooms = listOf<CinemaRoom>(CinemaRoom(1, "ROOM6", CinemaLayout(11,9))) ,name = "CGV", variant = "TP.HCM", logoUrl = "https://homepage.momocdn.net/placebrand/s/momo-upload-api-190709165424-636982880641515855.jpg"),
+            Cinema(cinemaRooms = listOf<CinemaRoom>(CinemaRoom(1, "ROOM6", CinemaLayout(11,9))) ,name = "Lotte", variant = "Bình Dương", logoUrl = "https://homepage.momocdn.net/blogscontents/momo-upload-api-210604170617-637584231772974269.png"),
+            Cinema(cinemaRooms = listOf<CinemaRoom>(CinemaRoom(1, "ROOM6", CinemaLayout(11,9))) ,name = "Galaxy", variant = "Long An", logoUrl = "https://homepage.momocdn.net/cinema/momo-upload-api-211123095138-637732578984425272.png"),
+            Cinema(cinemaRooms = listOf<CinemaRoom>(CinemaRoom(1, "ROOM6", CinemaLayout(11,9))) ,name = "BHD", variant = "Vũng Tàu", logoUrl = "https://homepage.momocdn.net/blogscontents/momo-upload-api-210604170453-637584230934981809.png"),
+            Cinema(cinemaRooms = listOf<CinemaRoom>(CinemaRoom(1, "ROOM6", CinemaLayout(11,9))) ,name = "Cinestar", variant = "Đồng Nai", logoUrl = "https://homepage.momocdn.net/blogscontents/momo-upload-api-210604170530-637584231309495829.png"),
+            Cinema(cinemaRooms = listOf<CinemaRoom>(CinemaRoom(1, "ROOM6", CinemaLayout(11,9))) ,name = "MegaGS", variant = "Bình Phước", logoUrl = "https://homepage.momocdn.net/blogscontents/momo-upload-api-210604170511-637584231119272266.png"),
+            Cinema(cinemaRooms = listOf<CinemaRoom>(CinemaRoom(1, "ROOM6", CinemaLayout(11,9))) ,name = "DCine", variant = "Hà Nội", logoUrl = "https://img.mservice.io/momo_app_v2/new_version/img/THAO.MAI/DcineLogo.png"),
+            Cinema(cinemaRooms = listOf<CinemaRoom>(CinemaRoom(1, "ROOM6", CinemaLayout(11,9))) ,name = "Beta", variant = "Hải Phòng", logoUrl = "https://homepage.momocdn.net/cinema/momo-upload-api-210813104719-637644484394328824.png"),
+            Cinema(cinemaRooms = listOf<CinemaRoom>(CinemaRoom(1, "ROOM6", CinemaLayout(11,9))) ,name = "Cinemax", variant = "Đà Nẵng", logoUrl = "https://homepage.momocdn.net/cinema/momo-upload-api-221108100132-638034984925107129.png")
         )
     }
 
+    fun loadSeats(): List<SeatPrice> {
+        return (1..13).flatMap { x -> (1..9).map { y -> SeatPrice(x = x, y = y, type = if (y > 3) "VIP" else "DEFAULT", price = if (y>3) 120000 else 100000) }}
+    }
+
+
     fun loadPerforms(): List<Perform> {
         return listOf<Perform>(
-            Perform(listFilm[0], startTime = Timestamp.valueOf("2024-03-23 09:00:00.0")),
-            Perform(listFilm[0], startTime = Timestamp.valueOf("2024-03-23 09:30:00.0")),
-            Perform(listFilm[0], startTime = Timestamp.valueOf("2024-03-23 11:30:00.0")),
-            Perform(listFilm[0], startTime = Timestamp.valueOf("2024-03-23 13:00:00.0")),
-            Perform(listFilm[0], startTime = Timestamp.valueOf("2024-03-23 15:30:00.0")),
-            Perform(listFilm[0], startTime = Timestamp.valueOf("2024-03-23 17:00:00.0")),
-            Perform(listFilm[0], startTime = Timestamp.valueOf("2024-03-23 17:30:00.0")),
+            Perform(loadSeats(), listFilm[0], startTime = Timestamp.valueOf("2024-03-23 09:00:00.0")),
+            Perform(loadSeats(), listFilm[0], startTime = Timestamp.valueOf("2024-03-23 09:30:00.0")),
+            Perform(loadSeats(),listFilm[0], startTime = Timestamp.valueOf("2024-03-23 11:30:00.0")),
+            Perform(loadSeats(),listFilm[0], startTime = Timestamp.valueOf("2024-03-23 13:00:00.0")),
+            Perform(loadSeats(),listFilm[0], startTime = Timestamp.valueOf("2024-03-23 15:30:00.0")),
+            Perform(loadSeats(),listFilm[0], startTime = Timestamp.valueOf("2024-03-23 17:00:00.0")),
+            Perform(loadSeats(),listFilm[0], startTime = Timestamp.valueOf("2024-03-23 17:30:00.0")),
         )
     }
 

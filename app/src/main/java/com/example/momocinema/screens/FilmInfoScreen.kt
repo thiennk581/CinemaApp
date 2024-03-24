@@ -14,18 +14,10 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,11 +25,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.momocinema.AppComponent.CustomButton
+import com.example.momocinema.AppComponent.CustomTopAppBar
 import com.example.momocinema.AppComponent.castInfo
 import com.example.momocinema.AppComponent.detailRating
 import com.example.momocinema.AppComponent.firstInfo
@@ -51,17 +43,7 @@ import com.example.momocinema.ui.theme.MomoCinemaTheme
 @Composable
 fun FilmInfo(film: Film) {
     Scaffold(
-        topBar = {
-            SmallTopAppBar(
-                title = { Text(text = film.title, maxLines = 1, overflow = TextOverflow.Ellipsis) },
-                navigationIcon = {
-                    IconButton(onClick = { /* TODO */ }) {            // trở về trang trước
-                        OutlinedCard { Icon(imageVector = Icons.Filled.KeyboardArrowLeft, contentDescription = null) }
-                    }
-                },
-                scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-            )
-        },
+        topBar = { CustomTopAppBar(title = film.title, onClick = { /* TODO */}) },
         bottomBar = { CustomButton(content = R.string.buy_button, onClick = {/* TODO */}) }
 
     ) {it ->
@@ -78,8 +60,8 @@ fun FilmInfo(film: Film) {
 
             Row(
                 modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp) ,horizontalArrangement = Arrangement.SpaceEvenly
+                    .fillMaxWidth()
+                    .padding(top = 10.dp) ,horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 secondInfo(title = R.string.release_date, detail = film.releaseDate)
                 Divider(thickness = 1.dp, color = Color(0xFFC8C8C8), modifier = Modifier
@@ -120,7 +102,7 @@ fun FilmInfo(film: Film) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, apiLevel = 33)
 @Composable
 fun FilmInfoPreview() {
     MomoCinemaTheme {
