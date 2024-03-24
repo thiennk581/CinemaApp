@@ -1,5 +1,7 @@
 package com.example.momocinema.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -18,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.example.momocinema.AppComponent.CustomTopAppBar
 import com.example.momocinema.AppComponent.detailCinema
 import com.example.momocinema.AppComponent.listCinema
-import com.example.momocinema.AppComponent.selectDay
+import com.example.momocinema.AppComponent.selectDate
 import com.example.momocinema.data.Datasource
 import com.example.momocinema.model.Cinema
 import com.example.momocinema.model.Film
@@ -26,6 +28,7 @@ import com.example.momocinema.ui.theme.MomoCinemaTheme
 import java.sql.Timestamp
 import java.time.Instant
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun SelectPerformScreen(film: Film) {
     val currentTime = Timestamp.from(Instant.now())    // lấy thời gian hiện tại (date + time)
@@ -33,9 +36,9 @@ fun SelectPerformScreen(film: Film) {
     Scaffold(
         topBar = {
             Column {
-                CustomTopAppBar(title = film.title, onClick = { /* TODO */})
+                CustomTopAppBar(text = film.title, onClick = { /* TODO */})
                 Divider(thickness = 10.dp, color = Color.White)
-                selectDay(currentTime = currentTime)
+                selectDate(currentTime = currentTime)
             }
         }
     ) {it ->
@@ -45,7 +48,7 @@ fun SelectPerformScreen(film: Film) {
         ) {
             Divider(thickness = 10.dp, color = Color.LightGray, modifier = Modifier.padding( bottom = 10.dp))
 
-            listCinema(listCinema = Datasource().loadCinemas())
+            listCinema(listCinema = Datasource().loadCinemas())         // TODO: truyền listCinema thích hợp
 
             Divider(thickness = 10.dp, color = Color.LightGray)
 
@@ -62,6 +65,7 @@ fun SelectPerformScreen(film: Film) {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true, apiLevel = 33)
 @Composable
 fun SelectPerformPreview() {

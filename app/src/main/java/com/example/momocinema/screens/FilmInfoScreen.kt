@@ -1,6 +1,5 @@
 package com.example.momocinema.screens
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,7 +14,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,12 +37,11 @@ import com.example.momocinema.data.Datasource
 import com.example.momocinema.model.Film
 import com.example.momocinema.ui.theme.MomoCinemaTheme
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun FilmInfo(film: Film) {
     Scaffold(
-        topBar = { CustomTopAppBar(title = film.title, onClick = { /* TODO */}) },
-        bottomBar = { CustomButton(content = R.string.buy_button, onClick = {/* TODO */}) }
+        topBar = { CustomTopAppBar(text = film.title, onClick = { /* TODO */}) },
+        bottomBar = { CustomButton(actionText = R.string.buy_button, onClick = {/* TODO */}) }
 
     ) {it ->
         Column(modifier = Modifier
@@ -54,10 +51,12 @@ fun FilmInfo(film: Film) {
             Image(painter = painterResource(id = R.drawable.panda), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier
                 .height(222.dp)
                 .fillMaxWidth()
-                .padding(bottom = 10.dp))
+                .padding(bottom = 10.dp))   //TODO(Thiện): chuyển qua Video
 
+            // thông tin quan trọng của film
             firstInfo(film = film)
 
+            // ngày khởi chiếu | Thời lượng | Ngôn ngữ
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -78,8 +77,8 @@ fun FilmInfo(film: Film) {
             }
 
             detailRating(film)
-
             Divider(thickness = 10.dp, color = Color(0xFFE6E6E6))
+
             // description
             Column(horizontalAlignment = Alignment.Start, modifier = Modifier.padding(vertical = 17.dp, horizontal = 10.dp)) {
                 Text(text = "Nội dung phim", fontWeight = FontWeight(600), fontSize = 19.sp,)

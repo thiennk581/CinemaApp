@@ -20,10 +20,14 @@ fun SelectFilmScreen(modifier: Modifier = Modifier) {
         modifier = modifier.verticalScroll(rememberScrollState())
     ) {
         ListTrendingNow(listFilm = Datasource().loadFilms(), purposeTitle = "Phim nổi bật")                 // TODO: truyền listFilm phù hợp vào
+
         Divider(thickness = 10.dp, color = Color(0xFFEEEEEE))
-        briefFilmList(listFilm = Datasource().loadFilms(), "Phim hay đang chiếu")               // TODO: truyền listFilm phù hợp vào
+
+        briefFilmList(listFilm = Datasource().loadFilms(), purposeTitle = "Phim hay đang chiếu")               // TODO: truyền listFilm phù hợp vào
+
         Divider(thickness = 10.dp, color = Color(0xFFEEEEEE))
-        briefFilmList(listFilm = Datasource().loadFilms(), "Phim sắp chiếu")                // TODO: truyền listFilm phù hợp vào
+
+        briefFilmList(listFilm = Datasource().loadFilms(), purposeTitle = "Phim sắp chiếu")                // TODO: truyền listFilm phù hợp vào
     }
 
 }

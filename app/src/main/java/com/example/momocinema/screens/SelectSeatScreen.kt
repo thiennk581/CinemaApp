@@ -47,7 +47,7 @@ fun SelectSeatScreen(perform: Perform, cinema: Cinema) {
         topBar = {
             Column {
                 CustomTopAppBar(
-                    title = cinema.name + " " + cinema.variant,
+                    text = cinema.name + " " + cinema.variant,
                     onClick = { /* TODO: trở về SelectPerformScreen */ })
                 Image(painter = painterResource(id = R.drawable.screen_in_cinema), contentDescription = null, contentScale = ContentScale.Fit, modifier = Modifier.fillMaxWidth())
             } },
@@ -66,7 +66,7 @@ fun SelectSeatScreen(perform: Perform, cinema: Cinema) {
                 Divider(thickness = 10.dp, color = Color.LightGray, modifier = Modifier.padding(bottom = 12.dp))
                 InfoPerform(perform = perform)
                 displayTotalPrice(totalPrice = 12345678)      // TODO: tính toán tiền xong đưa vào
-                CustomButton(content =  R.string.continue_button, onClick = { /*TODO: chuyển sang thanh toán*/ })
+                CustomButton(actionText =  R.string.continue_button, onClick = { /*TODO: chuyển sang thanh toán*/ })
             }
         }
 

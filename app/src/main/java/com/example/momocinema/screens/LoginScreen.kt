@@ -54,6 +54,7 @@ fun LoginScreen(modifier: Modifier = Modifier.padding(horizontal = 28.dp)) {
         Divider(thickness = 2.dp, color = Color.White)
         Text(text = stringResource(id = R.string.sign_to_continue), style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight(400))
         Divider(thickness = 70.dp, color = Color.White)
+
         TextFieldCustom(
             label = R.string.email_label,
             leadingIcon = Icons.Outlined.Email,
@@ -65,7 +66,9 @@ fun LoginScreen(modifier: Modifier = Modifier.padding(horizontal = 28.dp)) {
             onValueChange = { email = it },
             modifier = Modifier.size(width = 310.dp, height = 65.dp)
         )
+
         Divider(thickness = 26.dp, color = Color.White)
+
         PasswordTextField(
             label = R.string.password_label,
             leadingIcon = Icons.Outlined.Lock,
@@ -86,7 +89,7 @@ fun LoginScreen(modifier: Modifier = Modifier.padding(horizontal = 28.dp)) {
         // TODO?      a thêm vô cho vui, chắc khỏi cũng đc
 
         Divider(thickness = 30.dp, color = Color.White)
-        CustomButton(content = R.string.login_button, onClick = { /* TODO */})
+        CustomButton(actionText = R.string.login_button, onClick = { /* TODO */})
         Divider(thickness = 8.dp, color = Color.White)
         Row {
             Text(text = stringResource(id = R.string.dont_have_an_account), modifier = Modifier.padding(end = 4.dp))

@@ -90,6 +90,7 @@ fun RegisterScreen(modifier: Modifier = Modifier.padding(horizontal = 20.dp)) {
             modifier = Modifier.size(width = 310.dp, height = 65.dp)
         )
         Divider(thickness = 22.dp, color = Color.White)
+
         TextFieldCustom(
             label = R.string.email_label,
             leadingIcon = Icons.Outlined.Email,
@@ -102,6 +103,7 @@ fun RegisterScreen(modifier: Modifier = Modifier.padding(horizontal = 20.dp)) {
             modifier = Modifier.size(width = 310.dp, height = 65.dp)
         )
         Divider(thickness = 22.dp, color = Color.White)
+
         TextFieldCustom(
             label = R.string.phone_label,
             leadingIcon = Icons.Outlined.Phone,
@@ -114,6 +116,7 @@ fun RegisterScreen(modifier: Modifier = Modifier.padding(horizontal = 20.dp)) {
             modifier = Modifier.size(width = 310.dp, height = 65.dp)
         )
         Divider(thickness = 22.dp, color = Color.White)
+
         PasswordTextField(
             label = R.string.password_label,
             leadingIcon = Icons.Outlined.Lock,
@@ -126,6 +129,7 @@ fun RegisterScreen(modifier: Modifier = Modifier.padding(horizontal = 20.dp)) {
             idError = validPassword
         )
         Divider(thickness = 2.dp, color = Color.White)
+
         PasswordTextField(
             label = R.string.confirm_label,
             leadingIcon = Icons.Outlined.Lock,
@@ -138,6 +142,7 @@ fun RegisterScreen(modifier: Modifier = Modifier.padding(horizontal = 20.dp)) {
             idError = validConfirmPassword
         )
         Divider(thickness = 15.dp, color = Color.White)
+
         Button(             // button: CREATE ACCOUNT
             onClick = { /*TODO*/ },
             modifier = modifier
@@ -151,6 +156,7 @@ fun RegisterScreen(modifier: Modifier = Modifier.padding(horizontal = 20.dp)) {
             Text(text = stringResource(id = R.string.create_account), fontWeight = FontWeight(500), fontSize = 16.sp)
         }
         Divider(thickness = 12.dp, color = Color.White)
+
         Row {
             Text(text = stringResource(id = R.string.already_have_account), modifier = Modifier.padding(end = 4.dp))
             Text(text = stringResource(id = R.string.login), fontWeight = FontWeight.Bold, color = Color(0xFF234EC6),
