@@ -46,6 +46,7 @@ val dayNames = arrayOf("C.Nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "
 
 // Timestamp(2024-03-23 14:18:00.0) -> String(14:18)
 fun getStringOfTime(time: Timestamp): String = SimpleDateFormat("HH:mm").format(time)
+fun getStringOfDate(time: Timestamp): String = SimpleDateFormat("dd/MM/yyyy").format(time)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

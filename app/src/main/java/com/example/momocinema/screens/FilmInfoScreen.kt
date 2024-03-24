@@ -31,6 +31,7 @@ import com.example.momocinema.AppComponent.CustomTopAppBar
 import com.example.momocinema.AppComponent.castInfo
 import com.example.momocinema.AppComponent.detailRating
 import com.example.momocinema.AppComponent.firstInfo
+import com.example.momocinema.AppComponent.getStringOfDate
 import com.example.momocinema.AppComponent.secondInfo
 import com.example.momocinema.R
 import com.example.momocinema.data.Datasource
@@ -62,7 +63,7 @@ fun FilmInfo(film: Film) {
                     .fillMaxWidth()
                     .padding(top = 10.dp) ,horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                secondInfo(title = R.string.release_date, detail = film.releaseDate)
+                secondInfo(title = R.string.release_date, detail = getStringOfDate(film.releaseDate))
                 Divider(thickness = 1.dp, color = Color(0xFFC8C8C8), modifier = Modifier
                     .height(48.dp)
                     .width(1.dp)
