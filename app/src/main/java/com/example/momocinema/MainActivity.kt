@@ -32,6 +32,7 @@ class MainActivity : ComponentActivity() {
 
 val listFilm = Datasource().loadFilms()
 
+val testt = "thien test conflict"
 
 @Preview(showBackground = true, apiLevel = 33)
 @Composable
