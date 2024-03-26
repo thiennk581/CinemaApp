@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-val listFilm = Datasource().loadCinemas()
+val listFilm = Datasource().loadCast()
 
 val testt = "thien test conflict"
 
