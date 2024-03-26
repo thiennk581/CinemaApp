@@ -6,3 +6,4 @@ data class Cinema(
     val variant: String,
     val logoUrl: String,
 )
+
