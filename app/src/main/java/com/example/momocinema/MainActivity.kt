@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-val listFilm = Datasource().loadFilms()
+val listFilm = Datasource().loadCinemas()
 
 
 @Preview(showBackground = true, apiLevel = 33)
