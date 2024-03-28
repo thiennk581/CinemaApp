@@ -49,7 +49,7 @@ fun SelectPerformScreen(film: Film) {
             Divider(thickness = 10.dp, color = Color.LightGray, modifier = Modifier.padding( bottom = 10.dp))
 
             listCinema(listCinema = Datasource().loadCinemas())         // TODO: truyền listCinema thích hợp
-
+                                                                   // bởi vì film có thể dc hãng này chiếu nhưng hãng kia ko chiếu
             Divider(thickness = 10.dp, color = Color.LightGray)
 
             var expandedCinemaId by remember { mutableStateOf(0) }
@@ -58,7 +58,7 @@ fun SelectPerformScreen(film: Film) {
             Column {
                 for (cinemaId in 0..listCinemas.size-1) {
                     detailCinema(listPerform = Datasource().loadPerforms(), cinema = listCinemas[cinemaId], isExpanded = (cinemaId == expandedCinemaId),  onExpandedButtonClick = {expandedCinemaId = cinemaId})
-                    // TODO: listPerform cần đc truyền phù hợp
+                    // TODO: listPerform sẽ từ List<Perform> của Film
                 }
             }
         }

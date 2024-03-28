@@ -34,17 +34,31 @@ class Datasource() {
         )
     }
 
+    fun loadCinemaRooms(): List<CinemaRoom> {
+        return listOf<CinemaRoom>(
+            CinemaRoom(type = 1, name =  "ROOM1", cinemaLayout =  CinemaLayout(11,9), cinema = loadCinemas()[0]),
+            CinemaRoom(type = 1, name =  "ROOM2", cinemaLayout =  CinemaLayout(11,9), cinema = loadCinemas()[0]) ,
+            CinemaRoom(type = 1, name =  "ROOM3", cinemaLayout =  CinemaLayout(11,9), cinema = this.loadCinemas()[0]) ,
+            CinemaRoom(type = 1, name =  "ROOM4", cinemaLayout =  CinemaLayout(11,9), cinema = this.loadCinemas()[0]) ,
+            CinemaRoom(type = 1, name =  "ROOM5", cinemaLayout =  CinemaLayout(11,9), cinema = this.loadCinemas()[0]) ,
+            CinemaRoom(type = 1, name =  "ROOM6", cinemaLayout =  CinemaLayout(11,9), cinema = this.loadCinemas()[0]) ,
+            CinemaRoom(type = 1, name =  "ROOM7", cinemaLayout =  CinemaLayout(11,9), cinema = this.loadCinemas()[0]) ,
+            CinemaRoom(type = 1, name =  "ROOM8", cinemaLayout =  CinemaLayout(11,9), cinema = this.loadCinemas()[0]) ,
+            CinemaRoom(type = 1, name =  "ROOM9", cinemaLayout =  CinemaLayout(11,9), cinema = this.loadCinemas()[0])
+        )
+    }
+
     fun loadCinemas(): List<Cinema> {
-        return listOf<Cinema>(
-            Cinema(cinemaRooms = listOf<CinemaRoom>(CinemaRoom(1, "ROOM6", CinemaLayout(11,9))) ,name = "CGV", variant = "TP.HCM", logoUrl = "https://homepage.momocdn.net/placebrand/s/momo-upload-api-190709165424-636982880641515855.jpg"),
-            Cinema(cinemaRooms = listOf<CinemaRoom>(CinemaRoom(1, "ROOM6", CinemaLayout(11,9))) ,name = "Lotte", variant = "Bình Dương", logoUrl = "https://homepage.momocdn.net/blogscontents/momo-upload-api-210604170617-637584231772974269.png"),
-            Cinema(cinemaRooms = listOf<CinemaRoom>(CinemaRoom(1, "ROOM6", CinemaLayout(11,9))) ,name = "Galaxy", variant = "Long An", logoUrl = "https://homepage.momocdn.net/cinema/momo-upload-api-211123095138-637732578984425272.png"),
-            Cinema(cinemaRooms = listOf<CinemaRoom>(CinemaRoom(1, "ROOM6", CinemaLayout(11,9))) ,name = "BHD", variant = "Vũng Tàu", logoUrl = "https://homepage.momocdn.net/blogscontents/momo-upload-api-210604170453-637584230934981809.png"),
-            Cinema(cinemaRooms = listOf<CinemaRoom>(CinemaRoom(1, "ROOM6", CinemaLayout(11,9))) ,name = "Cinestar", variant = "Đồng Nai", logoUrl = "https://homepage.momocdn.net/blogscontents/momo-upload-api-210604170530-637584231309495829.png"),
-            Cinema(cinemaRooms = listOf<CinemaRoom>(CinemaRoom(1, "ROOM6", CinemaLayout(11,9))) ,name = "MegaGS", variant = "Bình Phước", logoUrl = "https://homepage.momocdn.net/blogscontents/momo-upload-api-210604170511-637584231119272266.png"),
-            Cinema(cinemaRooms = listOf<CinemaRoom>(CinemaRoom(1, "ROOM6", CinemaLayout(11,9))) ,name = "DCine", variant = "Hà Nội", logoUrl = "https://img.mservice.io/momo_app_v2/new_version/img/THAO.MAI/DcineLogo.png"),
-            Cinema(cinemaRooms = listOf<CinemaRoom>(CinemaRoom(1, "ROOM6", CinemaLayout(11,9))) ,name = "Beta", variant = "Hải Phòng", logoUrl = "https://homepage.momocdn.net/cinema/momo-upload-api-210813104719-637644484394328824.png"),
-            Cinema(cinemaRooms = listOf<CinemaRoom>(CinemaRoom(1, "ROOM6", CinemaLayout(11,9))) ,name = "Cinemax", variant = "Đà Nẵng", logoUrl = "https://homepage.momocdn.net/cinema/momo-upload-api-221108100132-638034984925107129.png")
+        return listOf<Cinema>(      // TODO: Cinema này sẽ có thêm List<CinemaRoom>
+            Cinema(name = "CGV", variant = "TP.HCM", logoUrl = "https://homepage.momocdn.net/placebrand/s/momo-upload-api-190709165424-636982880641515855.jpg"),
+            Cinema(name = "Lotte", variant = "Bình Dương", logoUrl = "https://homepage.momocdn.net/blogscontents/momo-upload-api-210604170617-637584231772974269.png"),
+            Cinema(name = "Galaxy", variant = "Long An", logoUrl = "https://homepage.momocdn.net/cinema/momo-upload-api-211123095138-637732578984425272.png"),
+            Cinema(name = "BHD", variant = "Vũng Tàu", logoUrl = "https://homepage.momocdn.net/blogscontents/momo-upload-api-210604170453-637584230934981809.png"),
+            Cinema(name = "Cinestar", variant = "Đồng Nai", logoUrl = "https://homepage.momocdn.net/blogscontents/momo-upload-api-210604170530-637584231309495829.png"),
+            Cinema(name = "MegaGS", variant = "Bình Phước", logoUrl = "https://homepage.momocdn.net/blogscontents/momo-upload-api-210604170511-637584231119272266.png"),
+            Cinema(name = "DCine", variant = "Hà Nội", logoUrl = "https://img.mservice.io/momo_app_v2/new_version/img/THAO.MAI/DcineLogo.png"),
+            Cinema(name = "Beta", variant = "Hải Phòng", logoUrl = "https://homepage.momocdn.net/cinema/momo-upload-api-210813104719-637644484394328824.png"),
+            Cinema(name = "Cinemax", variant = "Đà Nẵng", logoUrl = "https://homepage.momocdn.net/cinema/momo-upload-api-221108100132-638034984925107129.png")
         )
     }
 
@@ -55,13 +69,13 @@ class Datasource() {
 
     fun loadPerforms(): List<Perform> {
         return listOf<Perform>(
-            Perform(loadSeats(), listFilm[0], startTime = Timestamp.valueOf("2024-03-23 09:00:00.0")),
-            Perform(loadSeats(), listFilm[0], startTime = Timestamp.valueOf("2024-03-23 09:30:00.0")),
-            Perform(loadSeats(),listFilm[0], startTime = Timestamp.valueOf("2024-03-23 11:30:00.0")),
-            Perform(loadSeats(),listFilm[0], startTime = Timestamp.valueOf("2024-03-23 13:00:00.0")),
-            Perform(loadSeats(),listFilm[0], startTime = Timestamp.valueOf("2024-03-23 15:30:00.0")),
-            Perform(loadSeats(),listFilm[0], startTime = Timestamp.valueOf("2024-03-23 17:00:00.0")),
-            Perform(loadSeats(),listFilm[0], startTime = Timestamp.valueOf("2024-03-23 17:30:00.0")),
+            Perform(loadSeats(), film =  listFilm[0], startTime = Timestamp.valueOf("2024-03-23 09:00:00.0"), cinemaRoom = loadCinemaRooms()[0]),
+            Perform(loadSeats(), listFilm[0], startTime = Timestamp.valueOf("2024-03-23 09:30:00.0"), cinemaRoom = loadCinemaRooms()[1]),
+            Perform(loadSeats(),listFilm[0], startTime = Timestamp.valueOf("2024-03-23 11:30:00.0"), cinemaRoom = loadCinemaRooms()[2]),
+            Perform(loadSeats(),listFilm[0], startTime = Timestamp.valueOf("2024-03-23 13:00:00.0"), cinemaRoom = loadCinemaRooms()[3]),
+            Perform(loadSeats(),listFilm[0], startTime = Timestamp.valueOf("2024-03-23 15:30:00.0"), cinemaRoom = loadCinemaRooms()[4]),
+            Perform(loadSeats(),listFilm[0], startTime = Timestamp.valueOf("2024-03-23 17:00:00.0"), cinemaRoom = loadCinemaRooms()[5]),
+            Perform(loadSeats(),listFilm[0], startTime = Timestamp.valueOf("2024-03-23 17:30:00.0"), cinemaRoom = loadCinemaRooms()[6]),
         )
     }
 
