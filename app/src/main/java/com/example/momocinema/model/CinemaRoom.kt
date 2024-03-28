@@ -1,7 +1,8 @@
 package com.example.momocinema.model
 
 data class CinemaRoom(
-    val type: Int,       //
-    val name: String,
-    val cinemaLayout: CinemaLayout
+    val cinema: Cinema,
+    val cinemaLayout: CinemaLayout,
+    val type: Int,       // Enum: NORMAL, VIP,...
+    val name: String,   // ten phong
 )
