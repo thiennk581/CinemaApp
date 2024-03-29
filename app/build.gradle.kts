@@ -51,6 +51,19 @@ android {
 }
 
 dependencies {
+//    View Model and Live Data
+    val lifecycle_version = "2.7.0"
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+//    Retrofit and Coroutine
+    // retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    // GSON
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    // coroutine
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
