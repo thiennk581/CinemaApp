@@ -10,6 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.momocinema.data.Datasource
+import com.example.momocinema.screens.FilmInfo
+import com.example.momocinema.screens.FilmInfoPreview
+import com.example.momocinema.screens.SelectFilmScreen
 import com.example.momocinema.ui.theme.MomoCinemaTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,8 +25,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
-
+                    SelectFilmScreen()
                 }
             }
         }

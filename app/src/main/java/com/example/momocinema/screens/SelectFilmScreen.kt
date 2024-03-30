@@ -15,7 +15,7 @@ import com.example.momocinema.data.Datasource
 import com.example.momocinema.ui.theme.MomoCinemaTheme
 
 @Composable
-fun SelectFilmScreen(modifier: Modifier = Modifier) {
+fun SelectFilmScreen(modifier: Modifier = Modifier, navigateToAnotherScreen:()->Unit) {
     Column(
         modifier = modifier.verticalScroll(rememberScrollState())
     ) {
@@ -32,10 +32,10 @@ fun SelectFilmScreen(modifier: Modifier = Modifier) {
 
 }
 
-@Preview(showBackground = true)
-@Composable
-fun SelectFilmPreview() {
-    MomoCinemaTheme {
-        SelectFilmScreen()
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun SelectFilmPreview() {
+//    MomoCinemaTheme {
+//        SelectFilmScreen()
+//    }
+//}
