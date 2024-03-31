@@ -15,11 +15,11 @@ import com.example.momocinema.data.Datasource
 import com.example.momocinema.ui.theme.MomoCinemaTheme
 
 @Composable
-fun SelectFilmScreen(modifier: Modifier = Modifier) {
+fun SelectFilmScreen(modifier: Modifier = Modifier, navigateToAnotherScreen:()->Unit) {
     Column(
         modifier = modifier.verticalScroll(rememberScrollState())
     ) {
-        ListTrendingNow(listFilm = Datasource().loadFilms(), purposeTitle = "Phim nổi bật")                 // TODO: truyền listFilm phù hợp vào
+        ListTrendingNow(listFilm = Datasource().loadFilms(), purposeTitle = "Phim nổi bật")   //               // TODO: truyền listFilm phù hợp vào
 
         Divider(thickness = 10.dp, color = Color(0xFFEEEEEE))
 
@@ -32,10 +32,10 @@ fun SelectFilmScreen(modifier: Modifier = Modifier) {
 
 }
 
-@Preview(showBackground = true)
-@Composable
-fun SelectFilmPreview() {
-    MomoCinemaTheme {
-        SelectFilmScreen()
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun SelectFilmPreview() {
+//    MomoCinemaTheme {
+//        SelectFilmScreen()
+//    }
+//}

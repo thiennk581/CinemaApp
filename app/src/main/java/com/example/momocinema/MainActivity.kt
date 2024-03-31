@@ -23,6 +23,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
 
+                    //SelectFilmScreen()
+
                 }
             }
         }
@@ -30,9 +32,6 @@ class MainActivity : ComponentActivity() {
 }
 
 val listFilm = Datasource().loadFilms()
-
-
-
 
 
 
