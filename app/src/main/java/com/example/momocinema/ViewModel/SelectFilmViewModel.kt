@@ -10,27 +10,71 @@ import com.example.momocinema.repository.RANKING
 import kotlinx.coroutines.launch
 
 class SelectFilmViewModel:ViewModel() {
+
     init {
         fetchListFilm()
     }
     private var _listFilmSelectState = mutableStateOf(FilmSelectState())
     var listFilmSelectState = _listFilmSelectState
-    var calendar = Calendar.getInstance()
 
-
+    var currentTime:Long = 0
+    fun convertStringDayToLong(day:String):Long{
+        // later
+        return 0
+    }
     private fun filterListPerforming(list:List<FILM>): List<FILM> {
-
-        return list
+        currentTime = System.currentTimeMillis()
+        var listPerforming:MutableList<FILM> = mutableListOf()
+        for (item in list){
+            if (convertStringDayToLong(item.release_date)<=currentTime){
+                listPerforming.add(item)
+            }
+        }
+        return listPerforming
     }
     private fun filterListHaventPerformed(list:List<FILM>): List<FILM> {
-
-        return list
+        currentTime = System.currentTimeMillis()
+        var listHaventPerformed:MutableList<FILM> = mutableListOf()
+        for (item in list){
+            if (convertStringDayToLong(item.release_date)>currentTime){
+                listHaventPerformed.add(item)
+            }
+        }
+        return listHaventPerformed
     }
     private fun filterListOutstanding(list:List<FILM>): List<FILM> {
-        // handle later
-        return list
+        var listOutstanding:MutableList<FILM> = mutableListOf()
+        for (item in list){
+            var totalStar = 0;
+            for (rank in _listFilmSelectState.value.listRanking){
+                if (rank.id == item.id){
+                    totalStar += rank.ranking.toInt();
+                }
+            }
+            if (totalStar>=4.0){
+                listOutstanding.add(item)
+            }
+        }
+        return listOutstanding
     }
-
+    fun averageRankOfFilm(listRank:List<RANKING>, film:FILM):Float{
+        var average:Float = 0.0f
+        for (item in listRank){
+            if (item.id == film.id){
+                average = (average+item.ranking.toInt())/2
+            }
+        }
+        return average
+    }
+    fun totalRankOfFilm(listRank:List<RANKING>, film:FILM):Int{
+        var total:Int = 0
+        for (item in listRank){
+            if (item.id == film.id){
+                total +=1
+            }
+        }
+        return total
+    }
     fun fetchListFilm(){
         viewModelScope.launch {
             try {
