@@ -83,7 +83,7 @@ fun SelectSeatScreen(perform: Perform) {
                         selectingSeat = isSelected[(seat.y-1) * cinemaLayoutMaxX + seat.x].value,
                         // TODO: e ko muốn đưa state vào thì chỉnh selectingSeat
                         // chỗ này bị bug khi chạy trên device anh cũng chả biết fix sao:vv
-                        onClick = {     //TODO hàm khi chọn ghế
+                        onClick = {     //TODO hàm khi chọn ghế, chỉ cho phép chọn tối đa 8 ghế
                             isSelected[(seat.y-1) * cinemaLayoutMaxX + seat.x].value = !isSelected[(seat.y-1) * cinemaLayoutMaxX + seat.x].value
                         }
                     )

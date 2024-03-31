@@ -23,16 +23,18 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
 
-
                 }
             }
         }
     }
 }
 
-val listFilm = Datasource().loadCast()
+val listFilm = Datasource().loadFilms()
 
-val testt = "thien test conflict"
+
+
+
+
 
 @Preview(showBackground = true, apiLevel = 33)
 @Composable
@@ -46,5 +48,6 @@ fun GreetingPreview() {
         //SelectSeatScreen(perform = Perform(Datasource().loadSeats(),listFilm[0], startTime = Timestamp.valueOf("2024-03-23 09:00:00.0")),cinema = Cinema(cinemaRooms = listOf<CinemaRoom>(CinemaRoom(1, "ROOM6", CinemaLayout(13,9))) ,"Cinestar", "Đồng Nai", "https://homepage.momocdn.net/blogscontents/momo-upload-api-210604170453-637584230934981809.png"))
         //InfoPerform( perform = Perform(listFilm[0], startTime = Timestamp.valueOf("2024-03-23 09:00:00.0")))
         //Seat(seat = SeatPrice(13,9, 100000, "DEFAULT"), availableSeat = true, )
+        //PaymentScreen(perform = Datasource().loadPerforms()[0])
     }
 }
