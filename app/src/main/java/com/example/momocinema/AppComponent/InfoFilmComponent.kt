@@ -1,24 +1,33 @@
 package com.example.momocinema.AppComponent
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,7 +43,9 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.momocinema.R
 import com.example.momocinema.model.Cast
+import com.example.momocinema.model.Comment
 import com.example.momocinema.model.Film
+import com.example.momocinema.model.Ranking
 
 @Composable
 fun firstInfo(film: Film) {
@@ -182,6 +193,115 @@ fun detailRating(film: Film) {
                 determinateProgress(progress = (film.ranking.star56.toFloat() / film.ranking.amount), star = 5)
                 determinateProgress(progress = (film.ranking.star34.toFloat() / film.ranking.amount), star = 3)
                 determinateProgress(progress = (film.ranking.star12.toFloat() / film.ranking.amount), star = 1)
+            }
+        }
+    }
+}
+
+@Composable
+fun expandableText(text: String, isExpanded: Boolean, onClick:() -> Unit, modifier: Modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = modifier.padding(top = 7.dp)) {
+        if (isExpanded)
+            Text(text = text, fontSize = 13.sp, lineHeight = 15.sp)
+        else
+            Text(text = text, lineHeight = 15.sp, fontSize = 13.sp, maxLines = 3, overflow = TextOverflow.Ellipsis)
+        Text(text = if (isExpanded) "thu gọn" else "xem thêm", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Color(0xFF234EC6), modifier = Modifier.clickable(onClick = onClick))
+    }
+}
+
+@Composable
+fun filmComment(comment: Comment) {
+    var isExpanded by remember {
+        mutableStateOf(false)
+    }
+    val exclamation = when (comment.ranking) {
+        1,2 -> R.string.star12
+        3,4 -> R.string.star34
+        5,6 -> R.string.star56
+        7,8 -> R.string.star78
+        else -> R.string.star910
+    }
+    Column(modifier = Modifier.padding(10.dp)) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .height(40.dp)) {
+            AsyncImage(
+                model = comment.user.avt_url,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(40.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop
+            )
+            Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier
+                .padding(start = 5.dp)
+                .fillMaxSize()
+            ) {
+                Text(text = comment.user.name, fontWeight = FontWeight(500), fontSize = 13.sp)
+                Row {
+                    Icon(imageVector = Icons.Filled.Star, contentDescription = null, tint = Color(0xFFF08715), modifier = Modifier
+                        .padding(end = 2.dp)
+                        .size(20.dp))
+                    Text(text = comment.ranking.toString() + "/10 - " + stringResource(exclamation), fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                }
+            }
+        }
+        expandableText(
+            text = comment.body,
+            isExpanded = isExpanded,
+            onClick = { isExpanded = !isExpanded})
+        Divider(thickness = 1.dp, modifier = Modifier.padding(top = 10.dp))
+    }
+}
+
+@Composable
+fun listCommentOfFilm(ranking: Ranking, listComment: List<Comment>) {
+    Column(modifier = Modifier.padding(horizontal = 10.dp)) {
+        Text(text = "Cộng đồng Momo nghĩ gì?", fontWeight = FontWeight(500), modifier = Modifier.padding(top = 10.dp, bottom = 3.dp))
+        Row(modifier = Modifier
+            .padding(bottom = 10.dp)
+            .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.Bottom) {
+            Row(
+                verticalAlignment = Alignment.Bottom,
+                horizontalArrangement = Arrangement.Absolute.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Star,
+                    contentDescription = null,
+                    tint = Color(0xFFFE8E1D),
+                    modifier = Modifier
+                        .padding(bottom = 4.dp)
+                        .size(30.dp)
+                )
+                Text(
+                    text = ranking.averageRating.toString() + "/10",
+                    fontSize = 23.sp,
+                    fontWeight = FontWeight.Bold,
+                    lineHeight = 30.sp
+                )
+                numberOfReviews(
+                    amount = ranking.amount,
+                    style = MaterialTheme.typography.labelLarge,
+                    modifier = Modifier.padding(bottom = 5.dp)
+                )
+            }
+            Text(text = "Viết đánh giá", color = Color(0xFF234EC6), fontWeight = FontWeight(500), modifier = Modifier.clickable{ /* TODO: qua trang viết đánh giá*/})
+        }
+        Card(
+            elevation = CardDefaults.cardElevation(12.dp),
+            colors = CardDefaults.cardColors(Color.White),
+            modifier = Modifier.padding(bottom = 10.dp)
+        ) {
+            Column {
+                for(commentID in 0..4) {
+                    filmComment(comment = listComment[commentID])
+                }
+                Row(modifier = Modifier.padding(bottom = 10.dp).fillMaxWidth().clickable { /* TODO: qua trang xem tất cả đánh giá*/ }, horizontalArrangement = Arrangement.Center) {
+                    Text(text = "Xem tất cả ${ranking.amount} bài viết",
+                        color = Color(0xFF234EC6),
+                        fontWeight = FontWeight(500),)
+                    Icon(imageVector = Icons.Filled.KeyboardArrowRight, contentDescription = null, tint = Color(0xFF234EC6))
+                }
             }
         }
     }

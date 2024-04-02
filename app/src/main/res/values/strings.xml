@@ -47,4 +47,11 @@
     <string name = "selectingSeat">Ghế bạn chọn</string>
     <string name = "normalSeat">Ghế thường</string>
     <string name = "VIPSeat">Ghế VIP</string>
+
+    // star
+    <string name = "star12">Kén người mê</string>
+    <string name = "star34">Chưa ưng lắm</string>
+    <string name = "star56">Tạm ổn</string>
+    <string name = "star78">Đáng xem</string>
+    <string name = "star910">Cực phẩm!</string>
 </resources>

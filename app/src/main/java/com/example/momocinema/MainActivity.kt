@@ -12,7 +12,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.momocinema.data.Datasource
 import com.example.momocinema.navigation.CinemaTicketApp
-import com.example.momocinema.screens.SelectFilmScreen
 import com.example.momocinema.ui.theme.MomoCinemaTheme
 
 class MainActivity : ComponentActivity() {
@@ -39,6 +38,11 @@ val listFilm = Datasource().loadFilms()
 
 
 
+
+
+
+
+
 @Preview(showBackground = true, apiLevel = 33)
 @Composable
 fun GreetingPreview() {
@@ -52,5 +56,7 @@ fun GreetingPreview() {
         //InfoPerform( perform = Perform(listFilm[0], startTime = Timestamp.valueOf("2024-03-23 09:00:00.0")))
         //Seat(seat = SeatPrice(13,9, 100000, "DEFAULT"), availableSeat = true, )
         //PaymentScreen(perform = Datasource().loadPerforms()[0])
+        //filmComment(Datasource().loadComments()[0])
+        //listCommentOfFilm(ranking = Ranking(averageRating = 9.3f, amount = 2200, star12 = 100, star34 = 100, star56 = 500, star78 = 600, star910 = 900), listComment = Datasource().loadComments())
     }
 }

@@ -17,6 +17,10 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,8 +34,10 @@ import com.example.momocinema.AppComponent.CustomButton
 import com.example.momocinema.AppComponent.CustomTopAppBar
 import com.example.momocinema.AppComponent.castInfo
 import com.example.momocinema.AppComponent.detailRating
+import com.example.momocinema.AppComponent.expandableText
 import com.example.momocinema.AppComponent.firstInfo
 import com.example.momocinema.AppComponent.getStringOfDate
+import com.example.momocinema.AppComponent.listCommentOfFilm
 import com.example.momocinema.AppComponent.secondInfo
 import com.example.momocinema.R
 import com.example.momocinema.data.Datasource
@@ -40,6 +46,9 @@ import com.example.momocinema.ui.theme.MomoCinemaTheme
 
 @Composable
 fun FilmInfo(film: Film) {
+    var isExpanded by remember {
+        mutableStateOf(false)
+    }
     Scaffold(
         topBar = { CustomTopAppBar(text = film.title, onClick = { /* TODO */}) },
         bottomBar = { CustomButton(actionText = R.string.buy_button, onClick = {/* TODO */}) }
@@ -83,7 +92,7 @@ fun FilmInfo(film: Film) {
             // description
             Column(horizontalAlignment = Alignment.Start, modifier = Modifier.padding(vertical = 17.dp, horizontal = 10.dp)) {
                 Text(text = "Nội dung phim", fontWeight = FontWeight(600), fontSize = 19.sp,)
-                Text(text = film.description, modifier = Modifier.padding(top = 7.dp))
+                expandableText(text = film.description, isExpanded = isExpanded, onClick = { isExpanded = !isExpanded })
             }
             Divider(thickness = 10.dp, color = Color(0xFFE6E6E6))
 
@@ -98,6 +107,8 @@ fun FilmInfo(film: Film) {
                 }
             }
             Divider(thickness = 10.dp, color = Color(0xFFE6E6E6))
+            // comments
+            listCommentOfFilm(ranking = film.ranking, listComment = film.listComment)
         }
     }
 }

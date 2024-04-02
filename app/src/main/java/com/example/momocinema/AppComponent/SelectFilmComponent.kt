@@ -41,18 +41,17 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
 import coil.compose.AsyncImage
 import com.example.momocinema.ViewModel.SelectFilmViewModel
-import com.example.momocinema.model.Film
 import com.example.momocinema.repository.FILM
-import com.example.momocinema.repository.RANKING
 import kotlin.math.absoluteValue
 
 @Composable
-fun numberOfReviews(amount: Int, style: TextStyle) {
+fun numberOfReviews(amount: Int, style: TextStyle, modifier: Modifier = Modifier.padding(bottom = 5.dp)) {
     Text(
         text = if (amount < 1000) "(${amount} đánh giá)" else "("+"%.1f".format(amount/1000.0) +"K đánh giá)",
         color = Color(0xFFBEBEBE),
         style = style,
-        fontWeight = FontWeight.W400
+        fontWeight = FontWeight.W400,
+        modifier = modifier
     )
 }
 

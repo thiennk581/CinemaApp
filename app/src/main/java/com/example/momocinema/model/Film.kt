@@ -12,5 +12,6 @@ data class Film(
     val ranking: Ranking,             // trong RANKING chứ ko trong FILM
     val language: String,
     val description: String,
+    val listComment: List<Comment>,     // film gồm nhiều comment
     val cast: List<Cast>
 )
