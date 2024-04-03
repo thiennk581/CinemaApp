@@ -58,5 +58,6 @@ fun GreetingPreview() {
         //PaymentScreen(perform = Datasource().loadPerforms()[0])
         //filmComment(Datasource().loadComments()[0])
         //listCommentOfFilm(ranking = Ranking(averageRating = 9.3f, amount = 2200, star12 = 100, star34 = 100, star56 = 500, star78 = 600, star910 = 900), listComment = Datasource().loadComments())
+        //ReviewsScreen(filmTitle = "Godzilla x Kong: Đế chế mới", ranking = Ranking(averageRating = 9.3f, amount = 2200, star12 = 100, star34 = 100, star56 = 500, star78 = 600, star910 = 900), listComment = Datasource().loadComments())
     }
 }

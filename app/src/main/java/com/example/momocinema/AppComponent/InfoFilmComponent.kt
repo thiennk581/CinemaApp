@@ -154,7 +154,7 @@ fun determinateProgress(progress: Float, star: Int) {
 }
 
 @Composable
-fun detailRating(film: Film) {
+fun detailRating(ranking: Ranking) {
     Card(
         elevation = CardDefaults.cardElevation(12.dp),
         colors = CardDefaults.cardColors(Color.White),
@@ -171,7 +171,7 @@ fun detailRating(film: Film) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Absolute.Center) {
                     Icon(imageVector = Icons.Filled.Star, contentDescription = null, tint = Color(0xFFFE8E1D), modifier = Modifier.size(30.dp))
-                    Text(text = film.ranking.averageRating.toString(), fontSize = 30.sp, fontWeight = FontWeight.Bold, lineHeight = 30.sp)
+                    Text(text = ranking.averageRating.toString(), fontSize = 30.sp, fontWeight = FontWeight.Bold, lineHeight = 30.sp)
                     Text(
                         text = "/10",
                         fontWeight = FontWeight(450),
@@ -185,14 +185,14 @@ fun detailRating(film: Film) {
                             .align(Alignment.Bottom)
                     )
                 }
-                numberOfReviews(amount = film.ranking.amount, style = MaterialTheme.typography.labelLarge)
+                numberOfReviews(amount = ranking.amount, style = MaterialTheme.typography.labelLarge)
             }
             Column {
-                determinateProgress(progress = (film.ranking.star910.toFloat() / film.ranking.amount), star = 9)
-                determinateProgress(progress = (film.ranking.star78.toFloat() / film.ranking.amount), star = 7)
-                determinateProgress(progress = (film.ranking.star56.toFloat() / film.ranking.amount), star = 5)
-                determinateProgress(progress = (film.ranking.star34.toFloat() / film.ranking.amount), star = 3)
-                determinateProgress(progress = (film.ranking.star12.toFloat() / film.ranking.amount), star = 1)
+                determinateProgress(progress = (ranking.star910.toFloat() / ranking.amount), star = 9)
+                determinateProgress(progress = (ranking.star78.toFloat() / ranking.amount), star = 7)
+                determinateProgress(progress = (ranking.star56.toFloat() / ranking.amount), star = 5)
+                determinateProgress(progress = (ranking.star34.toFloat() / ranking.amount), star = 3)
+                determinateProgress(progress = (ranking.star12.toFloat() / ranking.amount), star = 1)
             }
         }
     }
@@ -221,7 +221,7 @@ fun filmComment(comment: Comment) {
         7,8 -> R.string.star78
         else -> R.string.star910
     }
-    Column(modifier = Modifier.padding(10.dp)) {
+    Column(modifier = Modifier.padding(horizontal = 10.dp)) {
         Row(modifier = Modifier
             .fillMaxWidth()
             .height(40.dp)) {
@@ -250,8 +250,18 @@ fun filmComment(comment: Comment) {
             text = comment.body,
             isExpanded = isExpanded,
             onClick = { isExpanded = !isExpanded})
-        Divider(thickness = 1.dp, modifier = Modifier.padding(top = 10.dp))
+        Divider(thickness = 1.dp, modifier = Modifier.padding(vertical = 10.dp))
     }
+}
+
+@Composable
+fun createCommentTextButton(text: String) {
+    Text(
+        text = text,
+        fontWeight = FontWeight(500),
+        color = Color(0xFF234EC6),
+        modifier = Modifier.clickable { /* TODO: chuyển sang trang viết đánh giá */ }
+    )
 }
 
 @Composable
@@ -285,7 +295,7 @@ fun listCommentOfFilm(ranking: Ranking, listComment: List<Comment>) {
                     modifier = Modifier.padding(bottom = 5.dp)
                 )
             }
-            Text(text = "Viết đánh giá", color = Color(0xFF234EC6), fontWeight = FontWeight(500), modifier = Modifier.clickable{ /* TODO: qua trang viết đánh giá*/})
+            createCommentTextButton(text = "Viết đánh giá")
         }
         Card(
             elevation = CardDefaults.cardElevation(12.dp),
@@ -293,10 +303,14 @@ fun listCommentOfFilm(ranking: Ranking, listComment: List<Comment>) {
             modifier = Modifier.padding(bottom = 10.dp)
         ) {
             Column {
+                Divider(thickness = 10.dp, color = Color.White)
                 for(commentID in 0..4) {
                     filmComment(comment = listComment[commentID])
                 }
-                Row(modifier = Modifier.padding(bottom = 10.dp).fillMaxWidth().clickable { /* TODO: qua trang xem tất cả đánh giá*/ }, horizontalArrangement = Arrangement.Center) {
+                Row(modifier = Modifier
+                    .padding(bottom = 10.dp)
+                    .fillMaxWidth()
+                    .clickable { /* TODO: qua trang xem tất cả đánh giá*/ }, horizontalArrangement = Arrangement.Center) {
                     Text(text = "Xem tất cả ${ranking.amount} bài viết",
                         color = Color(0xFF234EC6),
                         fontWeight = FontWeight(500),)

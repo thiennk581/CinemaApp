@@ -86,7 +86,7 @@ fun FilmInfo(film: Film) {
                 secondInfo(title = R.string.language, detail = film.language)
             }
 
-            detailRating(film)
+            detailRating(film.ranking)
             Divider(thickness = 10.dp, color = Color(0xFFE6E6E6))
 
             // description
